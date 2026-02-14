@@ -20,7 +20,7 @@
         theme: {
           extend: {
             colors: {
-              primary: "#1337ec",
+              primary: "#f2c94c",
               "background-light": "#f6f6f8",
               "background-dark": "#101322",
             },
@@ -40,10 +40,10 @@
     <style>
       .bg-mesh {
         background-color: #101322;
-        background-image: radial-gradient(at 0% 0%, hsla(230, 84%, 50%, 0.25) 0px, transparent 50%),
-          radial-gradient(at 100% 0%, hsla(230, 84%, 50%, 0.2) 0px, transparent 50%),
-          radial-gradient(at 100% 100%, hsla(230, 84%, 50%, 0.15) 0px, transparent 50%),
-          radial-gradient(at 0% 100%, hsla(230, 84%, 50%, 0.1) 0px, transparent 50%);
+        background-image: radial-gradient(at 0% 0%, hsla(45, 90%, 55%, 0.25) 0px, transparent 50%),
+          radial-gradient(at 100% 0%, hsla(40, 90%, 55%, 0.2) 0px, transparent 50%),
+          radial-gradient(at 100% 100%, hsla(35, 85%, 50%, 0.15) 0px, transparent 50%),
+          radial-gradient(at 0% 100%, hsla(30, 85%, 50%, 0.1) 0px, transparent 50%);
       }
     </style>
   </head>
@@ -52,12 +52,12 @@
   >
     <div
       class="absolute inset-0 bg-mesh z-0 pointer-events-none"
-      data-alt="Abstract blue gradient mesh background pattern"
+      data-alt="Abstract golden gradient mesh background pattern"
     ></div>
     <nav class="relative z-10 w-full px-6 py-4 flex justify-between items-center max-w-7xl mx-auto">
       <div class="flex items-center gap-2">
         <div
-          class="w-8 h-8 rounded bg-primary flex items-center justify-center shadow-[0_0_15px_rgba(19,55,236,0.5)]"
+          class="w-8 h-8 rounded bg-primary flex items-center justify-center shadow-[0_0_15px_rgba(242,201,76,0.5)]"
         >
           <span class="material-icons text-white text-sm">download</span>
         </div>
@@ -80,13 +80,17 @@
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuDimg-NrXbr3ecuOWzaeHw8k5cOpHQ9u-4ugWqen-qX5osXdBUrOHupnL3KwtlbnkEUdd_BpR-EdzYLiPJXVKU1f0W2OkyM4Siq6c1XHZux-iVuSuJB8C2SbgXBzM7u84f8TzPhMlGcsuszx5Wsz-dfEhEkJveDgvMRDOH_blgolR9-gSawg-ReJz2Ing-PU4EkJdrJ_y3OIfMQxr2Vf6XAMspGbG_vT9U4K9yE6m4rtImRlaWEtlZArIkLY_Wi7tR_QsSeiJBePA68"
             />
             <div
-              class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              id="preview-overlay"
+              class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300"
             >
-              <div
-                class="w-12 h-12 rounded-full bg-primary/90 flex items-center justify-center backdrop-blur-sm shadow-[0_0_20px_rgba(19,55,236,0.6)]"
+              <button
+                id="preview-button"
+                type="button"
+                aria-label="Play preview"
+                class="w-12 h-12 rounded-full bg-primary/90 flex items-center justify-center backdrop-blur-sm shadow-[0_0_20px_rgba(242,201,76,0.6)] transition-transform hover:scale-105"
               >
                 <span class="material-icons text-white">play_arrow</span>
-              </div>
+              </button>
             </div>
             <div
               id="result-duration"
@@ -119,7 +123,7 @@
           <div class="space-y-4">
             <div class="group relative">
               <div
-                class="absolute -inset-0.5 bg-gradient-to-r from-primary to-blue-500 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-200"
+                class="absolute -inset-0.5 bg-gradient-to-r from-primary to-amber-400 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-200"
               ></div>
               <button
                 id="download-video"

@@ -159,6 +159,7 @@ function initResults() {
   const meta = document.getElementById("result-meta");
   const status = document.getElementById("result-status");
   const durationEl = document.getElementById("result-duration");
+  const previewButton = document.getElementById("preview-button");
   const videoButton = document.getElementById("download-video");
   const audioButton = document.getElementById("download-audio");
   const thumbButton = document.getElementById("download-thumb");
@@ -189,12 +190,17 @@ function initResults() {
   }
 
   const data = payload.data || {};
+  const sourceUrl = payload.sourceUrl || "";
   const caption = data.caption || data.title || "Download ready";
   const hosting = data.hosting || "Instagram";
   const mediaType = String(data.type || "video").toLowerCase();
-  const downloadUrl = data.download_url || data.downloadLink || data.download_link || data.url || "";
-  const thumbUrl = data.thumb || data.thumbnail || "";
+  let downloadUrl = data.download_url || data.downloadLink || data.download_link || data.url || "";
+  const thumbUrl = data.thumb_best || data.thumb || data.thumbnail || "";
   const duration = formatDuration(Number(data.duration));
+
+  if (!downloadUrl && hosting === "youtube" && sourceUrl) {
+    downloadUrl = sourceUrl;
+  }
 
   title.textContent = caption;
   meta.textContent = `Source: ${hosting} • ${mediaType.toUpperCase()}`;
@@ -212,6 +218,18 @@ function initResults() {
   const baseName = sanitizeFilename(caption || "instagram-media");
   const extension = guessExtension(downloadUrl || thumbUrl, mediaType);
   const filename = `${baseName || "instagram-media"}${extension}`;
+
+  if (previewButton) {
+    const previewUrl = downloadUrl || sourceUrl || thumbUrl;
+    if (previewUrl) {
+      previewButton.addEventListener("click", () => {
+        window.open(previewUrl, "_blank", "noopener,noreferrer");
+      });
+    } else {
+      previewButton.disabled = true;
+      previewButton.classList.add("opacity-50", "cursor-not-allowed");
+    }
+  }
 
   attachDownload(videoButton, downloadUrl, filename);
 
