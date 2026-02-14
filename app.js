@@ -1,4 +1,4 @@
-﻿const API_BASE = "http://localhost:5050";
+const API_BASE = "https://sentirax-downloader-backend.onrender.com";
 const INFO_ENDPOINT = `${API_BASE}/api/info`;
 const DOWNLOAD_ENDPOINT = `${API_BASE}/api/download`;
 const RESULT_STORAGE_KEY = "sentirax_result";
