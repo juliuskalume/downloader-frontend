@@ -234,10 +234,16 @@ function initResults() {
   attachDownload(videoButton, downloadUrl, filename);
 
   if (videoTitle) {
-    videoTitle.textContent = mediaType === "image" ? "Image" : "Video";
+    if (mediaType === "audio") {
+      videoTitle.textContent = "Audio";
+    } else if (mediaType === "image") {
+      videoTitle.textContent = "Image";
+    } else {
+      videoTitle.textContent = "Media";
+    }
   }
   if (videoMeta) {
-    videoMeta.textContent = mediaType === "audio" ? "Audio" : "Highest Quality";
+    videoMeta.textContent = mediaType === "audio" ? "High Fidelity" : "Highest Quality Available";
   }
 
   if (thumbButton) {
