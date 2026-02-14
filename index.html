@@ -1,0 +1,406 @@
+﻿<!DOCTYPE html>
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Sentirax Downloader Home</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#1337ec",
+              "background-light": "#f6f6f8",
+              "background-dark": "#101322",
+              glass: "rgba(255, 255, 255, 0.05)",
+              "glass-border": "rgba(255, 255, 255, 0.1)",
+            },
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            backgroundImage: {
+              "hero-pattern":
+                "url('https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=2574&auto=format&fit=crop')",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+
+      .glass-panel {
+        background: rgba(16, 19, 34, 0.6);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .input-gradient-border {
+        position: relative;
+        background: #101322;
+        border-radius: 0.5rem;
+        z-index: 1;
+      }
+
+      .input-gradient-border::before {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        border-radius: 0.6rem;
+        background: linear-gradient(45deg, #1337ec, #7c3aed, #1337ec);
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .input-focus-wrapper:focus-within .input-gradient-border::before {
+        opacity: 1;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translate(0px, 0px) scale(1);
+        }
+        33% {
+          transform: translate(30px, -50px) scale(1.1);
+        }
+        66% {
+          transform: translate(-20px, 20px) scale(0.9);
+        }
+        100% {
+          transform: translate(0px, 0px) scale(1);
+        }
+      }
+
+      .blob {
+        animation: float 10s infinite ease-in-out;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col overflow-x-hidden font-display selection:bg-primary selection:text-white"
+  >
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+      <div
+        class="absolute top-[-10%] left-[-10%] w-[40rem] h-[40rem] bg-purple-600/20 rounded-full blur-[100px] blob"
+      ></div>
+      <div
+        class="absolute bottom-[-10%] right-[-10%] w-[35rem] h-[35rem] bg-primary/20 rounded-full blur-[100px] blob"
+        style="animation-delay: -2s;"
+      ></div>
+      <div
+        class="absolute top-[20%] right-[10%] w-[25rem] h-[25rem] bg-pink-500/10 rounded-full blur-[80px] blob"
+        style="animation-delay: -4s;"
+      ></div>
+      <div
+        class="absolute inset-0 opacity-[0.03]"
+        style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%221%22/%3E%3C/svg%3E');"
+      ></div>
+    </div>
+    <nav class="sticky top-0 z-50 w-full glass-panel border-b border-white/5">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20">
+          <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer group">
+            <div
+              class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-all duration-300"
+            >
+              <span class="material-icons-round text-white text-2xl">download</span>
+            </div>
+            <span
+              class="text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70"
+              >Sentirax</span
+            >
+          </div>
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-baseline space-x-8">
+              <a
+                class="text-white/70 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                href="#"
+                >How it Works</a
+              >
+              <a
+                class="text-white/70 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                href="#"
+                >Supported Sites</a
+              >
+              <a
+                class="text-white/70 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                href="#"
+                >Pricing</a
+              >
+              <a
+                class="text-white/70 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                href="#"
+                >FAQ</a
+              >
+            </div>
+          </div>
+          <div class="hidden md:block">
+            <button
+              class="bg-white/10 hover:bg-white/20 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-all border border-white/10"
+            >
+              Sign In
+            </button>
+          </div>
+          <div class="-mr-2 flex md:hidden">
+            <button
+              class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-white/10 focus:outline-none"
+              type="button"
+            >
+              <span class="sr-only">Open main menu</span>
+              <span class="material-icons-round">menu</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <main class="flex-grow flex items-center justify-center relative z-10 px-4 py-12 lg:py-24">
+      <div class="w-full max-w-4xl mx-auto text-center">
+        <div class="mb-12 space-y-4 animate-fade-in-up">
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold uppercase tracking-wider mb-4"
+          >
+            <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+            v2.0 Now Available
+          </div>
+          <h1
+            class="text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-white/50 tracking-tight leading-tight mb-2 drop-shadow-sm"
+          >
+            Sentirax Downloader
+          </h1>
+          <p class="text-xl md:text-2xl text-slate-400 font-light max-w-2xl mx-auto">
+            All In One Downloader. Save high-quality videos from your favorite social platforms
+            instantly.
+          </p>
+        </div>
+        <div
+          class="glass-panel rounded-2xl p-2 md:p-3 shadow-2xl shadow-black/50 backdrop-blur-xl border border-white/10 relative overflow-hidden group"
+        >
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+          ></div>
+          <div class="bg-background-dark/80 rounded-xl p-6 md:p-10 relative z-10">
+            <div class="input-focus-wrapper w-full max-w-3xl mx-auto relative">
+              <div class="input-gradient-border p-[1px]">
+                <div
+                  class="relative flex items-center bg-background-dark rounded-lg overflow-hidden h-14 md:h-16"
+                >
+                  <div class="pl-4 md:pl-6 text-slate-500">
+                    <span class="material-icons-round text-2xl">link</span>
+                  </div>
+                  <input
+                    id="url-input"
+                    aria-label="Video URL"
+                    class="w-full h-full bg-transparent border-0 focus:ring-0 text-white placeholder-slate-500 px-4 text-lg"
+                    placeholder="Paste video URL here (Youtube, Instagram, TikTok...)"
+                    type="text"
+                  />
+                  <div class="pr-2 py-2">
+                    <button
+                      id="download-btn"
+                      class="h-full bg-primary hover:bg-blue-600 text-white px-6 md:px-8 rounded-md font-semibold transition-all shadow-lg shadow-primary/30 flex items-center gap-2"
+                      type="button"
+                    >
+                      <span id="download-label">Download</span>
+                      <span class="material-icons-round text-sm">arrow_forward</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-white/5">
+              <p class="text-sm text-slate-500 mb-6 font-medium uppercase tracking-widest">
+                Supported Platforms
+              </p>
+              <div
+                class="flex flex-wrap justify-center gap-6 md:gap-10 opacity-70 hover:opacity-100 transition-opacity duration-300"
+              >
+                <div
+                  class="group flex flex-col items-center gap-2 transition-transform hover:-translate-y-1"
+                >
+                  <div
+                    class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 group-hover:bg-[#FF0000]/20 transition-colors"
+                  >
+                    <svg
+                      class="w-5 h-5 fill-current text-slate-400 group-hover:text-[#FF0000]"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <span class="text-[10px] text-slate-500 group-hover:text-white uppercase"
+                    >YouTube</span
+                  >
+                </div>
+                <div
+                  class="group flex flex-col items-center gap-2 transition-transform hover:-translate-y-1"
+                >
+                  <div
+                    class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 group-hover:bg-[#E1306C]/20 transition-colors"
+                  >
+                    <svg
+                      class="w-5 h-5 fill-current text-slate-400 group-hover:text-[#E1306C]"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <span class="text-[10px] text-slate-500 group-hover:text-white uppercase"
+                    >Instagram</span
+                  >
+                </div>
+                <div
+                  class="group flex flex-col items-center gap-2 transition-transform hover:-translate-y-1"
+                >
+                  <div
+                    class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 group-hover:bg-[#00f2ea]/20 transition-colors"
+                  >
+                    <svg
+                      class="w-5 h-5 fill-current text-slate-400 group-hover:text-[#00f2ea]"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.49-3.35-3.98-5.6-1.04-4.8 1.93-9.52 6.6-10.66.44-.11.89-.19 1.34-.23v4.06c-.32-.01-.65.05-.96.18-.73.28-1.25.96-1.36 1.73-.21 1.4.74 2.82 2.11 3.16.89.23 1.83.05 2.59-.53.51-.39.82-.99.82-1.63V.02h.12z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <span class="text-[10px] text-slate-500 group-hover:text-white uppercase"
+                    >TikTok</span
+                  >
+                </div>
+                <div
+                  class="group flex flex-col items-center gap-2 transition-transform hover:-translate-y-1"
+                >
+                  <div
+                    class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 group-hover:bg-white/20 transition-colors"
+                  >
+                    <svg
+                      class="w-5 h-5 fill-current text-slate-400 group-hover:text-white"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <span class="text-[10px] text-slate-500 group-hover:text-white uppercase"
+                    >Twitter</span
+                  >
+                </div>
+                <div
+                  class="group flex flex-col items-center gap-2 transition-transform hover:-translate-y-1"
+                >
+                  <div
+                    class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 group-hover:bg-[#1877F2]/20 transition-colors"
+                  >
+                    <svg
+                      class="w-5 h-5 fill-current text-slate-400 group-hover:text-[#1877F2]"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036c-2.148 0-2.797 1.651-2.797 2.895v1.076h3.441l-1.159 3.667h-2.282v7.98c4.591-.976 8.026-5.044 8.026-9.873a10.082 10.082 0 1 0-13.045 9.873z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <span class="text-[10px] text-slate-500 group-hover:text-white uppercase"
+                    >Facebook</span
+                  >
+                </div>
+                <div
+                  class="group flex flex-col items-center gap-2 transition-transform hover:-translate-y-1"
+                >
+                  <div
+                    class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 group-hover:bg-[#E60023]/20 transition-colors"
+                  >
+                    <svg
+                      class="w-5 h-5 fill-current text-slate-400 group-hover:text-[#E60023]"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.399.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.951-7.252 4.173 0 7.41 2.967 7.41 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <span class="text-[10px] text-slate-500 group-hover:text-white uppercase"
+                    >Pinterest</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 opacity-80">
+          <div class="flex items-center justify-center gap-3 text-slate-300">
+            <span class="material-icons-round text-primary text-xl">bolt</span>
+            <span class="text-sm font-medium">Lightning Fast Downloads</span>
+          </div>
+          <div class="flex items-center justify-center gap-3 text-slate-300">
+            <span class="material-icons-round text-primary text-xl">hd</span>
+            <span class="text-sm font-medium">Up to 4K Quality</span>
+          </div>
+          <div class="flex items-center justify-center gap-3 text-slate-300">
+            <span class="material-icons-round text-primary text-xl">security</span>
+            <span class="text-sm font-medium">100% Safe &amp; Secure</span>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="mt-auto border-t border-white/5 bg-[#0a0c16] relative z-10">
+      <div
+        class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4"
+      >
+        <p class="text-slate-500 text-sm">© 2023 Sentirax Downloader. All rights reserved.</p>
+        <div class="flex space-x-6">
+          <a class="text-slate-500 hover:text-white text-sm transition-colors" href="#"
+            >Privacy Policy</a
+          >
+          <a class="text-slate-500 hover:text-white text-sm transition-colors" href="#"
+            >Terms of Service</a
+          >
+          <a class="text-slate-500 hover:text-white text-sm transition-colors" href="#"
+            >Contact</a
+          >
+        </div>
+      </div>
+    </footer>
+    <div
+      class="fixed top-1/2 right-0 -translate-y-1/2 translate-x-1/2 w-[800px] h-[800px] opacity-10 pointer-events-none z-0 mix-blend-screen"
+      data-alt="Abstract glowing network lines visualizing data transfer"
+    >
+      <div class="w-full h-full bg-gradient-to-l from-primary to-transparent rounded-full blur-3xl"></div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
