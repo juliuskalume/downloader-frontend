@@ -203,6 +203,30 @@
     <footer class="relative z-10 w-full text-center py-6 text-slate-500 text-sm">
       <p>© 2023 Sentirax. All rights reserved.</p>
     </footer>
+    <div
+      id="preview-modal"
+      class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 px-4 py-6"
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
+        class="relative w-full max-w-4xl bg-[#0f1426] border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
+      >
+        <button
+          id="preview-close"
+          type="button"
+          class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center"
+          aria-label="Close preview"
+        >
+          <span class="material-icons">close</span>
+        </button>
+        <div id="preview-content" class="w-full aspect-video bg-black/50"></div>
+        <div class="px-6 py-4 text-sm text-slate-400 border-t border-white/10">
+          Inline preview. Use the Download buttons for the best quality file.
+        </div>
+      </div>
+    </div>
     <script src="app.js"></script>
   </body>
 </html>

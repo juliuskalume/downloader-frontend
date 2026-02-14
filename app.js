@@ -24,6 +24,37 @@ function guessExtension(link, mediaType) {
   return ".bin";
 }
 
+function isYouTubeUrl(value) {
+  if (!value) return false;
+  try {
+    const url = new URL(value);
+    return url.hostname.includes("youtube.com") || url.hostname.includes("youtu.be");
+  } catch (error) {
+    return false;
+  }
+}
+
+function extractYouTubeId(value) {
+  try {
+    const url = new URL(value);
+    if (url.hostname.includes("youtu.be")) {
+      return url.pathname.replace("/", "");
+    }
+    if (url.searchParams.get("v")) {
+      return url.searchParams.get("v");
+    }
+    if (url.pathname.includes("/shorts/")) {
+      return url.pathname.split("/shorts/")[1].split("/")[0];
+    }
+    if (url.pathname.includes("/embed/")) {
+      return url.pathname.split("/embed/")[1].split("/")[0];
+    }
+  } catch (error) {
+    return "";
+  }
+  return "";
+}
+
 function buildDownloadUrl(mediaUrl, filename) {
   const url = new URL(DOWNLOAD_ENDPOINT);
   url.searchParams.set("url", mediaUrl);
@@ -101,6 +132,91 @@ function attachDownload(button, mediaUrl, filename) {
     event.preventDefault();
     triggerDownload(mediaUrl, filename);
   });
+}
+
+function openPreviewModal(contentEl) {
+  const modal = document.getElementById("preview-modal");
+  const container = document.getElementById("preview-content");
+  const closeBtn = document.getElementById("preview-close");
+
+  if (!modal || !container || !contentEl) return;
+
+  container.innerHTML = "";
+  container.appendChild(contentEl);
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("overflow-hidden");
+
+  const close = () => {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("overflow-hidden");
+    container.innerHTML = "";
+  };
+
+  const onKey = (event) => {
+    if (event.key === "Escape") {
+      close();
+    }
+  };
+
+  const onBackdrop = (event) => {
+    if (event.target === modal) {
+      close();
+    }
+  };
+
+  closeBtn?.addEventListener("click", close, { once: true });
+  modal.addEventListener("click", onBackdrop, { once: true });
+  window.addEventListener("keydown", onKey, { once: true });
+}
+
+function buildPreviewElement({ downloadUrl, sourceUrl, thumbUrl, mediaType }) {
+  const previewUrl = downloadUrl || sourceUrl || thumbUrl;
+
+  if (!previewUrl) return null;
+
+  if (isYouTubeUrl(previewUrl)) {
+    const id = extractYouTubeId(previewUrl);
+    if (!id) return null;
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+    iframe.allow =
+      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+    iframe.allowFullscreen = true;
+    iframe.className = "w-full h-full";
+    return iframe;
+  }
+
+  if (mediaType === "audio") {
+    const audio = document.createElement("audio");
+    audio.src = previewUrl;
+    audio.controls = true;
+    audio.autoplay = true;
+    audio.className = "w-full h-full";
+    return audio;
+  }
+
+  if (mediaType === "image") {
+    const img = document.createElement("img");
+    img.src = previewUrl;
+    img.alt = "Media preview";
+    img.className = "w-full h-full object-contain bg-black";
+    return img;
+  }
+
+  const video = document.createElement("video");
+  video.src = previewUrl;
+  video.controls = true;
+  video.autoplay = true;
+  video.playsInline = true;
+  video.className = "w-full h-full";
+  if (thumbUrl) {
+    video.poster = thumbUrl;
+  }
+  return video;
 }
 
 function initHome() {
@@ -220,10 +336,15 @@ function initResults() {
   const filename = `${baseName || "instagram-media"}${extension}`;
 
   if (previewButton) {
-    const previewUrl = downloadUrl || sourceUrl || thumbUrl;
-    if (previewUrl) {
+    const element = buildPreviewElement({
+      downloadUrl,
+      sourceUrl,
+      thumbUrl,
+      mediaType,
+    });
+    if (element) {
       previewButton.addEventListener("click", () => {
-        window.open(previewUrl, "_blank", "noopener,noreferrer");
+        openPreviewModal(element);
       });
     } else {
       previewButton.disabled = true;
